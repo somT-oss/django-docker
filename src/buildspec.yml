@@ -14,16 +14,12 @@ environment_variables:
 phases:
   pre_build:
     commands:
-      - echo Pulling updates from the git repo
-      - git fetch 
-      - git pull
+      - echo Prebuild ops
+      - pip3 install requirements.txt
   build:
     commands:
-      - echo Building the Docker image 
-      - aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 816554915038.dkr.ecr.us-east-2.amazonaws.com
-      - docker build -t django-website:latest
-      - docker tag django-website:latest 816554915038.dkr.ecr.us-east-2.amazonaws.com/django-webiste:latest
-      - docker push 816554915038.dkr.ecr.us-east-2.amazonaws.com/django-webiste:latest
+      - echo Building the application 
+      - python3 manage.py test 
   post_build:
     commands:
       - echo Build completed on `date`
